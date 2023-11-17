@@ -1,6 +1,7 @@
 # statpage | a minimal status page application
 ![GitHub License](https://img.shields.io/github/license/ngn13/statpage)
 ![Go version](https://img.shields.io/github/go-mod/go-version/ngn13/statpage)
+![Lines of code](https://img.shields.io/tokei/lines/:provider/ngn13/statpage)
 
 ![showcase](images/default.png)
 
@@ -24,7 +25,7 @@ docker run -d -v $PWD/data:/app/data     \
               -v $PWD/config:/app/config \
               -p 80:8877                 \
               --name statpage            \
-              ngn13/statpage:latest
+              statpage
 ```
 
 ### Building from source
