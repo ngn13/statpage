@@ -1,0 +1,19 @@
+{
+  "title": "statpage",
+  "address": ":8877",
+  "contact": "mailto:owner@example.com",
+  "interval": "5m",
+  "services": [
+    {
+      "name": "Example",
+      "address": "example.com",
+      "type": "HTTPS",
+      "data": "/",
+      "link": "https://example.com",
+      "rule": {
+        "contains": "Example Domain",
+        "not_contains": "Bad Gateway"
+      }
+    },
+  ]
+}

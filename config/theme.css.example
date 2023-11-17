@@ -1,0 +1,38 @@
+/* 
+  This file contains the example CSS for customizing the status page 
+  If you want to customize the status page, then copy this file to "theme.css"
+  And start playing around with the variables below.
+
+  You do NOT need to copy this file if you don't want to customize your status page.
+*/
+
+:root {
+  /* Status line background */
+  --status-background: black;
+
+  /* Body background */
+  --page-background: #101010;
+
+  /* Service background */
+  --service-background: #050505;
+
+  /* Header background */
+  --header-background: black; 
+
+  /* Bar colors, default colors go from green (100) to red (0) */
+  --bar-inactive: #202020;
+  --bar-100: #005000;
+  --bar-70: #505000;
+  --bar-40: #502500;
+  --bar-0: #500000;
+
+  /* Bar colors that will be shown when the mouse is hovered */
+  --bar-100-hover: #00FF00;
+  --bar-70-hover: #FFFF00;
+  --bar-40-hover: #FF4500;
+  --bar-0-hover: #FF0000;
+
+  /* Status line text colors */
+  --status-up: var(--bar-100-hover);
+  --status-down: var(--bar-0-hover);
+}

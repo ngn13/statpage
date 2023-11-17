@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1024">
+    <link href="/style.css" rel="stylesheet">
+    <link href="/theme.css" rel="stylesheet">
+  </head>
+  <body>
+
+    <div class="header">
+      <h1>{{.title}}</h1>
+      <p>last update: {{.checktime}}</p>
+    </div>
+
+    <div class="services">
+      {{range $service := .services}}
+        <div class="service">
+          <div class="service-inner">
+            <div class="title">
+              {{if (eq $service.Link "")}}
+                <h1>{{$service.Name}}</h1>
+              {{else}}
+                <h1>{{$service.Name}}<a href="{{$service.Link}}"></a></h1>
+              {{end}}
+            </div>
+            <div class="bars">
+            {{range $result := $service.Results}}
+              {{if gt $result.SuccessRate 90}}
+                <div title=" {{$result.Date}} | {{$result.TimeAverage}}ms " class="bar bar-100"></div>
+              {{else if gt $result.SuccessRate 70}}
+                <div title=" {{$result.Date}} | {{$result.TimeAverage}}ms " class="bar bar-70"></div>
+              {{else if gt $result.SuccessRate 40}}
+                <div title=" {{$result.Date}} | {{$result.TimeAverage}}ms " class="bar bar-40"></div>
+              {{else}}
+                <div title=" {{$result.Date}} | {{$result.TimeAverage}}ms " class="bar bar-0"></div>
+              {{end}}
+            {{end}}
+            </div>
+          </div>
+          <div class="status">
+            <div>
+              service is 
+              {{if $service.LastSuccess}} 
+                <b class="up">up</b> 
+              {{else}} 
+                <b class="down">down</b> 
+              {{end}}
+            </div>
+            {{if $service.LastTime}}
+              <p>{{$service.LastTime}}ms</p>
+            {{end}}
+          </div>
+        </div>
+      {{end}}
+    </div>
+
+    <div class="footer">
+      <a href="{{.contact}}">contact</a> | powered by <a href="https://github.com/ngn13/statpage">statpage</a> 
+    </div>
+
+  </body>
+</html>
+

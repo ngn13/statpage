@@ -1,0 +1,4 @@
+config/*.css
+config/*.json
+data/
+statpage

@@ -1,0 +1,171 @@
+:root {
+  --status-background: black;
+  --page-background: #101010;
+  --service-background: #050505;
+  --header-background: black; 
+
+  --bar-inactive: #202020;
+  --bar-100: #005000;
+  --bar-70: #505000;
+  --bar-40: #502500;
+  --bar-0: #500000;
+
+  --bar-100-hover: #00FF00;
+  --bar-70-hover: #FFFF00;
+  --bar-40-hover: #FF4500;
+  --bar-0-hover: #FF0000;
+
+  --status-up: var(--bar-100-hover);
+  --status-down: var(--bar-0-hover);
+}
+
+@font-face {
+  font-family: "Ubuntu";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("/Ubuntu.ttf");
+}
+
+* {
+  padding: 0px;
+  margin: 0px;
+}
+
+body {
+  font-family: "Ubuntu";
+  background: var(--page-background);
+}
+
+.header {
+  background: var(--header-background); 
+  padding: 70px;
+}
+
+.header h1 {
+  text-shadow: 0px 10px 20px rgba(90, 90, 90, 0.8);
+  text-align: center;
+  font-size: 50px;
+  color: white;
+}
+
+.header p {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 20px;
+  color: white;
+}
+
+.services {
+  display: flex;
+  flex-direction: column;
+  padding: 50px;
+  gap: 30px;
+}
+
+.service {
+  display: flex;
+  flex-direction: column;
+  background: var(--service-background);
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+.service-inner {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px;
+}
+
+.title h1{
+  font-size: 30px;
+  color: white;
+}
+
+.title a {
+  font-size: 20px;
+  color: white;
+  text-decoration: none;
+}
+
+.status {
+  font-size: 20px;
+  color: white;
+  background: var(--status-background);
+  border-radius: 5px 5px 0px 0px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.bars {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  height: auto;
+  flex-wrap: wrap;
+}
+
+.bar {
+  padding: 5px;
+  height: 20px;
+  border-radius: 5px;
+  background: var(--bar-inactive);
+  cursor: pointer;
+  transition: .4s;
+  flex-shrink: 1;
+}
+
+.bar-100 {
+  background: var(--bar-100);
+}
+
+.bar-100:hover {
+  background: var(--bar-100-hover);
+}
+
+.bar-70 {
+  background: var(--bar-70);
+}
+
+.bar-70:hover {
+  background: var(--bar-70-hover);
+}
+
+.bar-40 {
+  background: var(--bar-40);
+}
+
+.bar-40:hover {
+  background: var(--bar-40-hover);
+}
+
+.bar-0 {
+  background: var(--bar-0);
+}
+
+.bar-0:hover {
+  background: var(--bar-0-hover);
+}
+
+.up {
+  color: var(--status-up);
+}
+
+.down {
+  color: var(--status-down);
+}
+
+.footer {
+  text-align: center;
+  color: #404040;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.footer a {
+  color: #404040;
+}
