@@ -22,7 +22,7 @@ docker build --tag statpage .
 # create and edit the configuration file before
 # starting the container - see the configuration section
 docker run -d -v $PWD/data:/app/data     \
-              -v $PWD/config:/app/config \
+              -v $PWD/config:/app/config   \
               -p 80:8877                 \
               --name statpage            \
               statpage
