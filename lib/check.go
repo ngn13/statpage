@@ -5,6 +5,7 @@ import (
 	"io"
 	"net"
 	"net/http"
+	"net/http/httptrace"
 	"strings"
 	"time"
 
@@ -12,10 +13,17 @@ import (
 )
 
 func CheckGET(s Service, url string,) (bool, int) {
-  // TODO: use httptrace to get more accurate time results
-  start := time.Now()
-  res, err := http.Get(url)
-  elapsed := time.Since(start).Milliseconds()
+  req, err := http.NewRequest("GET", url, nil)
+  var start time.Time
+  var elapsed int64
+
+  trace := &httptrace.ClientTrace{
+    ConnectStart: func(_, _ string){ start = time.Now() },
+    GotFirstResponseByte: func(){ elapsed = time.Since(start).Milliseconds() },
+  } 
+
+  req = req.WithContext(httptrace.WithClientTrace(req.Context(), trace))
+  res, err := http.DefaultClient.Do(req)
 
   if err != nil {
     return false, 0
