@@ -1,7 +1,7 @@
 # statpage | a minimal status page application
-![GitHub License](https://img.shields.io/github/license/ngn13/statpage)
-![Go version](https://img.shields.io/github/go-mod/go-version/ngn13/statpage)
-![GitHub repo size](https://img.shields.io/github/repo-size/ngn13/statpage)
+![GitHub License](https://img.shields.io/github/license/ngn13/statpage?style=for-the-badge)
+![Go version](https://img.shields.io/github/go-mod/go-version/ngn13/statpage?style=for-the-badge)
+![GitHub repo size](https://img.shields.io/github/repo-size/ngn13/statpage?style=for-the-badge)
 
 ![showcase](images/default.png)
 
