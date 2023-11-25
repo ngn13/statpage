@@ -11,7 +11,7 @@
 
     <div class="header">
       <h1>{{.title}}</h1>
-      <p>last update: {{.checktime}}</p>
+      <p>last update: {{call .checktime .lastcheck}}</p>
     </div>
 
     <div class="services">
@@ -27,14 +27,18 @@
             </div>
             <div class="bars">
             {{range $result := $service.Results}}
-              {{if gt $result.SuccessRate 90}}
-                <div title=" {{$result.Date}} | {{$result.TimeAverage}}ms " class="bar bar-100"></div>
-              {{else if gt $result.SuccessRate 70}}
-                <div title=" {{$result.Date}} | {{$result.TimeAverage}}ms " class="bar bar-70"></div>
-              {{else if gt $result.SuccessRate 40}}
-                <div title=" {{$result.Date}} | {{$result.TimeAverage}}ms " class="bar bar-40"></div>
+              {{if $result.Success}}
+                {{if gt $result.Time 200}}
+                  <div title=" {{call $.checktime $result.Stamp}} | {{$result.Time}}ms " class="bar bar-0"></div>
+                {{else if gt $result.Time 150}}
+                  <div title=" {{call $.checktime $result.Stamp}} | {{$result.Time}}ms " class="bar bar-40"></div>
+                {{else if gt $result.Time 100}}
+                  <div title=" {{call $.checktime $result.Stamp}} | {{$result.Time}}ms " class="bar bar-70"></div>
+                {{else}}
+                  <div title=" {{call $.checktime $result.Stamp}} | {{$result.Time}}ms " class="bar bar-100"></div>
+                {{end}}
               {{else}}
-                <div title=" {{$result.Date}} | {{$result.TimeAverage}}ms " class="bar bar-0"></div>
+                  <div title=" {{call $.checktime $result.Stamp}} | Down " class="bar bar-0"></div>
               {{end}}
             {{end}}
             </div>
@@ -62,4 +66,3 @@
 
   </body>
 </html>
-

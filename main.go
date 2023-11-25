@@ -13,8 +13,32 @@ import (
 	"github.com/ngn13/statpage/lib"
 )
 
+func CheckTimePassed(t time.Time) string {
+  diff := time.Since(t)
+  res := fmt.Sprintf(
+    "%ds ago", 
+    int(diff.Seconds()),
+  )
+
+  if diff.Minutes() > 1 { 
+    res = fmt.Sprintf(
+      "%dm and %ds ago", 
+      int(diff.Minutes()), int(diff.Seconds())-(int(diff.Minutes())*60),
+    )
+  }
+
+  if diff.Hours() > 1 {
+    res = fmt.Sprintf("%dh and %dm ago", 
+      int(diff.Hours()),
+      int(diff.Minutes())-(int(diff.Hours())*60), 
+    )
+  }
+
+  return res
+}
+
 func main(){
-  lib.LoadResults()
+  lib.LoadData()
   go lib.Loop()
 
   engine := html.New("./views", ".html") 
@@ -26,31 +50,14 @@ func main(){
   app.Static("/", "./public")
 
   app.Get("/", func(c *fiber.Ctx) error {
-    t := time.Since(lib.Checktime)
-    chtime := fmt.Sprintf(
-      "%ds ago", 
-      int(t.Seconds()),
-    )
-
-    if t.Minutes() > 1 {
-      chtime = fmt.Sprintf(
-        "%dm and %ds ago", 
-        int(t.Minutes()), int(t.Seconds())-(int(t.Minutes())*60),
-      )
-    }
-
-    if t.Hours() > 1 {
-      chtime = fmt.Sprintf("%dh and %dm ago", 
-        int(t.Hours()),
-        int(t.Minutes())-(int(t.Hours())*60), 
-      )
-    }
+    
 
     return c.Render("index", fiber.Map{
       "title": lib.GetConfig().Title,
       "contact": lib.GetConfig().Contact,
       "services": lib.Services,
-      "checktime": chtime,
+      "lastcheck": lib.LastChecked,
+      "checktime": CheckTimePassed,
     })
   })
 

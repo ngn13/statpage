@@ -52,6 +52,7 @@ Copy this file to `config/config.json` to get started with the configuration.
 - `contact`: Contact URL that will be displayed at the bottom of the page
 - `interval`: Service check interval 
 - `services`: List of services to check
+- `reset`: When there is as much check results as `reset`, a new result will drop the oldest result in the list
 
 ### Service config options
 - `name`: Service name
@@ -76,6 +77,9 @@ over `contains`
 If you want to customize the status page, check out [theme.css.example](config/theme.css.example)
 file to get started.
 
-## 📃 License 
+## 📃 Licenses
 This project is licensed under GNU General Public License version 3 (GPLv3). Please see 
 [LICENSE.txt](LICENSE.txt) for more information.
+
+License for [NerdFonts](https://github.com/ryanoasis/nerd-fonts), which is the font used in 
+the application, can be found [here](https://github.com/ryanoasis/nerd-fonts/blob/master/LICENSE).

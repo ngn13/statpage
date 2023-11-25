@@ -18,12 +18,13 @@ func CheckGET(s Service, url string,) (bool, int) {
   var elapsed int64
 
   trace := &httptrace.ClientTrace{
-    ConnectStart: func(_, _ string){ start = time.Now() },
+    GetConn: func(_ string){ start = time.Now() },
     GotFirstResponseByte: func(){ elapsed = time.Since(start).Milliseconds() },
   } 
 
   req = req.WithContext(httptrace.WithClientTrace(req.Context(), trace))
   res, err := http.DefaultClient.Do(req)
+  log.Infof("MS: %d", uint64(elapsed));
 
   if err != nil {
     return false, 0
@@ -31,6 +32,7 @@ func CheckGET(s Service, url string,) (bool, int) {
 
   defer res.Body.Close()
   raw, err := io.ReadAll(res.Body)
+  log.Infof("Body: %s", raw);
   if err != nil {
     log.Errorf("Error reading body from %s: %s", url, err)
     return false, 0
@@ -49,7 +51,6 @@ func CheckGET(s Service, url string,) (bool, int) {
   }
 
   return true, int(elapsed)
-
 }
 
 func CheckTCP(s Service, useTls bool) (bool, int) {

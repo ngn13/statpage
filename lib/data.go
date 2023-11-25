@@ -2,7 +2,6 @@ package lib
 
 import (
 	"encoding/json"
-	"fmt"
 	"os"
 	"path"
 	"time"
@@ -11,11 +10,9 @@ import (
 )
 
 type Result struct {
-  SuccessRate int     `json:"success_rate"` 
-  TimeAverage int     `json:"time_average"`
-  Success     []bool  `json:"success"`
-  Time        []int   `json:"time"`
-  Date        string  `json:"date"`
+  Time        int             `json:"time"`
+  Success     bool            `json:"success"`
+  Stamp       time.Time       `json:"stamp"`
 }
 
 // data is just a json list containing all the services 
@@ -55,7 +52,7 @@ func CheckDataDir() {
   }
 }
 
-func LoadResults() {
+func LoadData() {
   CheckDataDir()
 
   content, err := os.ReadFile(path.Join("data", "data.json"))
@@ -80,7 +77,7 @@ func LoadResults() {
   Services = data.Services
 }
 
-func SaveResults() {
+func SaveData() {
   CheckDataDir()
   
   // create a temp data object
@@ -98,25 +95,6 @@ func SaveResults() {
   if err != nil {
     log.Fatalf("Error writing to data file: %s", err)
   }
-}
-
-func CalcRate(result Result) Result {
-  // really ugly rate calculations
-  result.SuccessRate = 100
-  persuccess := 100/len(result.Success)
-  for _, s := range result.Success {
-    if !s {
-      result.SuccessRate = result.SuccessRate - persuccess
-    }
-  }
-
-  result.TimeAverage = 0
-  for _, t := range result.Time {
-    result.TimeAverage += t
-  }
-  result.TimeAverage = result.TimeAverage / len(result.Time)
-
-  return result
 }
 
 func CheckRemoved() {
@@ -137,52 +115,45 @@ func CheckRemoved() {
     }
   }
 
-  SaveResults()
+  SaveData()
 }
 
 func SaveResult(service Service, t int, ok bool) {
   CheckRemoved()
 
-  found := false
-  now := time.Now()
-  date := fmt.Sprintf(
-    "%d/%d/%d", 
-    now.Day(), now.Month(), now.Year(),
-  )
-
   for i := range Services {
-    if Services[i].Address == service.Address && Services[i].Type == service.Type {
-      indx := len(Services[i].Results)-1
-      Services[i].Results[indx].Time = append(Services[i].Results[indx].Time, t)
-      Services[i].Results[indx].Success = append(Services[i].Results[indx].Success, ok)
-      Services[i].Results[indx].Date = date
-
-      Services[i].LastTime = t 
-      Services[i].LastSuccess = ok 
-      found = true
+    if Services[i].Address != service.Address || Services[i].Type != service.Type {
+      continue
     }
-  }
-
-  if !found {
-    service.Results = append(service.Results, Result{
-      SuccessRate: 100,
-      TimeAverage: 0,
-      Success: []bool{ok},
-      Time: []int{t},
-      Date: date,
+    
+    Services[i].Results = append(Services[i].Results, Result{
+      Time: t,
+      Success: ok,
+      Stamp: time.Now(),
     })
 
-    service.LastTime = t
-    service.LastSuccess = ok 
-    Services = append(Services, service)
+    Services[i].LastTime = t 
+    Services[i].LastSuccess = ok  
+
+    if(len(Services[i].Results) > GetConfig().Reset) {
+      copy(Services[i].Results[0:], Services[i].Results[1:])
+      Services[i].Results[len(Services[i].Results)-1] = Result{}
+      Services[i].Results = Services[i].Results[:len(Services[i].Results)-1]
+    }
+
+    SaveData()
+    return
   }
 
-  for _, s := range Services {
-    if s.Address == service.Address && s.Type == service.Type { 
-      last := len(s.Results)-1
-      s.Results[last] = CalcRate(s.Results[last])
-    } 
-  }
+  service.Results = append(service.Results, Result{
+    Success: ok,
+    Time: t,
+    Stamp: time.Now(),
+  })
 
-  SaveResults()
+  service.LastTime = t
+  service.LastSuccess = ok 
+  Services = append(Services, service)
+  
+  SaveData()
 }
