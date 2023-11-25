@@ -24,7 +24,6 @@ func CheckGET(s Service, url string,) (bool, int) {
 
   req = req.WithContext(httptrace.WithClientTrace(req.Context(), trace))
   res, err := http.DefaultClient.Do(req)
-  log.Infof("MS: %d", uint64(elapsed));
 
   if err != nil {
     return false, 0
@@ -32,7 +31,6 @@ func CheckGET(s Service, url string,) (bool, int) {
 
   defer res.Body.Close()
   raw, err := io.ReadAll(res.Body)
-  log.Infof("Body: %s", raw);
   if err != nil {
     log.Errorf("Error reading body from %s: %s", url, err)
     return false, 0
