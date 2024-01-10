@@ -9,7 +9,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/log"
 	"github.com/gofiber/fiber/v2/middleware/logger"
-	"github.com/gofiber/template/html/v2"
+  "github.com/gofiber/template/django/v3"
 	"github.com/ngn13/statpage/lib"
 )
 
@@ -41,7 +41,7 @@ func main(){
   lib.LoadData()
   go lib.Loop()
 
-  engine := html.New("./views", ".html") 
+  engine := django.New("./views", ".html")
   app := fiber.New(fiber.Config{
     Views: engine,
   })
@@ -50,11 +50,8 @@ func main(){
   app.Static("/", "./public")
 
   app.Get("/", func(c *fiber.Ctx) error {
-    
-
     return c.Render("index", fiber.Map{
-      "title": lib.GetConfig().Title,
-      "contact": lib.GetConfig().Contact,
+      "cfg": lib.GetConfig(),
       "services": lib.Services,
       "lastcheck": lib.LastChecked,
       "checktime": CheckTimePassed,
@@ -73,6 +70,14 @@ func main(){
 
     c.Set("Content-Type", "text/css; charset=utf-8")
     return c.Send(theme)
+  })
+
+  app.Get("/favicon.ico", func(c *fiber.Ctx) error {
+    return c.Status(404).SendString("I don't have an icon :/")
+  })
+
+  app.Get("*", func(c *fiber.Ctx) error {
+    return c.Redirect("/")
   })
 
   addr := lib.GetConfig().Address

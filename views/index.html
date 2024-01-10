@@ -5,64 +5,67 @@
     <meta name="viewport" content="width=1024">
     <link href="/style.css" rel="stylesheet">
     <link href="/theme.css" rel="stylesheet">
-    <title>{{.title}}</title>
+    <title>{{ cfg.Title }}</title>
   </head>
   <body>
 
     <div class="header">
-      <h1>{{.title}}</h1>
-      <p>last update: {{call .checktime .lastcheck}}</p>
+      <h1>{{ cfg.Title }}</h1>
+      <p>last update: {{ checktime(lastcheck) }}</p>
     </div>
 
     <div class="services">
-      {{range $service := .services}}
+      {% for s in services %}
         <div class="service">
           <div class="service-inner">
             <div class="title">
-              {{if (eq $service.Link "")}}
-                <h1>{{$service.Name}}</h1>
-              {{else}}
-                <h1>{{$service.Name}}<a href="{{$service.Link}}"></a></h1>
-              {{end}}
+              {% if service.Link=="" %}
+                <h1>{{ s.Name }}</h1>
+              {% else %}
+                <h1>{{ s.Name }}<a href="{{ s.Link }}"></a></h1>
+              {% endif %}
             </div>
             <div class="bars">
-            {{range $result := $service.Results}}
-              {{if $result.Success}}
-                {{if gt $result.Time 200}}
-                  <div title=" {{call $.checktime $result.Stamp}} | {{$result.Time}}ms " class="bar bar-0"></div>
-                {{else if gt $result.Time 150}}
-                  <div title=" {{call $.checktime $result.Stamp}} | {{$result.Time}}ms " class="bar bar-40"></div>
-                {{else if gt $result.Time 100}}
-                  <div title=" {{call $.checktime $result.Stamp}} | {{$result.Time}}ms " class="bar bar-70"></div>
-                {{else}}
-                  <div title=" {{call $.checktime $result.Stamp}} | {{$result.Time}}ms " class="bar bar-100"></div>
-                {{end}}
-              {{else}}
-                  <div title=" {{call $.checktime $result.Stamp}} | Down " class="bar bar-0"></div>
-              {{end}}
-            {{end}}
+            {% for res in s.Results %}
+              {% if res.Success and cfg.ShowTime %}
+                {% if res.Time > 200 %}
+                  <div title=" {{ checktime(res.Stamp) }} | {{ res.Time }}ms " class="bar bar-0"></div>
+                {% elif res.Time > 150 %}
+                  <div title=" {{ checktime(res.Stamp) }} | {{ res.Time }}ms " class="bar bar-40"></div>
+                {% elif res.Time > 100 %}
+                  <div title=" {{ checktime(res.Stamp) }} | {{ res.Time }}ms " class="bar bar-70"></div>
+                {% else %}
+                  <div title=" {{ checktime(res.Stamp) }} | {{ res.Time }}ms " class="bar bar-100"></div>
+                {% endif %}
+              {% elif res.Success and !cfg.ShowTime %}
+                  <div title=" {{ checktime(res.Stamp) }} | Up" class="bar bar-100"></div>
+              {% else %}
+                  <div title=" {{ checktime(res.Stamp) }} | Down " class="bar bar-0"></div>
+              {% endif %}
+            {% endfor %}
             </div>
           </div>
           <div class="status">
             <div>
               service is 
-              {{if $service.LastSuccess}} 
+              {% if s.LastSuccess %} 
                 <b class="up">up</b> 
-              {{else}} 
+              {% else %} 
                 <b class="down">down</b> 
-              {{end}}
+              {% endif %}
             </div>
-            {{if $service.LastTime}}
-              <p>{{$service.LastTime}}ms</p>
-            {{end}}
+            {% if s.LastTime and cfg.ShowTime %}
+              <p>{{ s.LastTime }}ms</p>
+            {% endif %}
           </div>
         </div>
-      {{end}}
+      {% endfor %}
     </div>
 
     <div class="footer">
-      <a href="{{.contact}}">contact</a> | powered by <a href="https://github.com/ngn13/statpage">statpage</a> 
+      <a href="{{ cfg.contact }}">contact</a> 
+          | powered by 
+      <a href="https://github.com/ngn13/statpage">statpage</a> 
     </div>
-
   </body>
 </html>

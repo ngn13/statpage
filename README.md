@@ -51,8 +51,9 @@ Copy this file to `config/config.json` to get started with the configuration.
 - `address`: The interface and the port that statpage will listen on
 - `contact`: Contact URL that will be displayed at the bottom of the page
 - `interval`: Service check interval 
-- `services`: List of services to check
 - `reset`: When there is as much check results as `reset`, a new result will drop the oldest result in the list
+- `time`: Enable/disable showing response times
+- `services`: List of services to check
 
 ### Service config options
 - `name`: Service name

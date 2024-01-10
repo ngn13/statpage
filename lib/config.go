@@ -39,6 +39,7 @@ type Service struct {
 type Config struct {
   // all the config options
   Reset     int       `json:"reset"`
+  ShowTime  bool      `json:"time"`
   Title     string    `json:"title"`
   Address   string    `json:"address"`
   Contact   string    `json:"contact"`

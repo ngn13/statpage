@@ -4,6 +4,7 @@
   "contact": "mailto:owner@example.com",
   "interval": "5m",
   "reset": 15,
+  "time": true,
   "services": [
     {
       "name": "Example",
