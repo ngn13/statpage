@@ -22,6 +22,7 @@ func CheckGET(s Service, url string,) (bool, int) {
     GotFirstResponseByte: func(){ elapsed = time.Since(start).Milliseconds() },
   } 
 
+  http.DefaultClient.Timeout = 10*time.Second
   req = req.WithContext(httptrace.WithClientTrace(req.Context(), trace))
   res, err := http.DefaultClient.Do(req)
 
@@ -56,10 +57,11 @@ func CheckTCP(s Service, useTls bool) (bool, int) {
   var err error
 
   if useTls {
-    var tlscfg *tls.Config 
+    var tlscfg *tls.Config
     conn, err = tls.Dial("tcp", s.Address, tlscfg)
   }else {
-    conn, err = net.Dial("tcp", s.Address)
+    d := net.Dialer{Timeout: 10*time.Second}
+    conn, err = d.Dial("tcp", s.Address)
   }
 
   if err != nil {
