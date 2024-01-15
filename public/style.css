@@ -24,7 +24,7 @@
   font-style: normal;
   font-weight: 300;
   font-display: swap;
-  src: url("/Ubuntu.ttf");
+  src: url("/Ubuntu.woff2") format("woff2");
 }
 
 * {
