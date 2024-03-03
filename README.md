@@ -1,7 +1,7 @@
 # statpage | minimal status page application
 ![](https://img.shields.io/github/license/ngn13/statpage?style=for-the-badge)
 ![](https://img.shields.io/github/go-mod/go-version/ngn13/statpage?style=for-the-badge)
-![](https://img.shields.io/github/actions/workflow/status/ngn13/statpage/docker.yml)
+![](https://img.shields.io/github/actions/workflow/status/ngn13/statpage/docker.yml?style=for-the-badge)
 
 ![showcase](images/default.png)
 
