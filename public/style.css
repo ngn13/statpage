@@ -2,7 +2,14 @@
   --status-background: black;
   --page-background: #101010;
   --service-background: #050505;
+  --time-background: black;
+  --service-border: solid 1px #404040;
   --header-background: black; 
+  --title-background: black;
+  --title-border: solid 1px #404040;
+
+  --shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  --radius: 10px;
 
   --bar-inactive: #202020;
   --bar-100: #005000;
@@ -66,57 +73,54 @@ body {
 .service {
   display: flex;
   flex-direction: column;
+  box-shadow: var(--shadow); 
   background: var(--service-background);
-  border-radius: 5px;
-  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  border: var(--service-border);
+  border-radius: var(--radius);
 }
 
-.service-inner {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  padding: 30px;
-}
-
-.title h1{
+.service h1{
   font-size: 30px;
   color: white;
+  padding: 28px;
 }
 
-.title a {
-  font-size: 20px;
+.service a {
   color: white;
   text-decoration: none;
 }
 
-.status {
-  font-size: 20px;
-  color: white;
-  background: var(--status-background);
-  border-radius: 5px 5px 0px 0px;
+.service a:hover {
+  color: #a0a0a0;
+  text-decoration: none;
+}
+
+.graph {
+  height: 30px;
+  display: flex;
+  flex-direction: row;
+  gap: 2px;
+}
+
+.time {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 20px;
+  align-items: center;
+  padding: 15px;
+  background: var(--time-background);
+  border-radius: 0 0 var(--radius) var(--radius);
 }
 
-.bars {
-  display: flex;
-  flex-direction: row;
-  gap: 5px;
-  height: auto;
-  flex-wrap: wrap;
+.time h1 {
+  color: white;
+  font-size: 15px;
+  padding: 0px;
 }
 
-.bar {
-  padding: 5px;
-  height: 20px;
-  border-radius: 5px;
-  background: var(--bar-inactive);
-  cursor: pointer;
-  transition: .4s;
-  flex-shrink: 1;
+.graph div {
+  padding: 10px;
+  flex-grow: 1;
 }
 
 .bar-100 {
@@ -168,4 +172,31 @@ body {
 
 .footer a {
   color: #404040;
+}
+
+[data-title]:hover:after {
+  opacity: 1;
+  visibility: visible;
+}
+
+[data-title]:after {
+  content: attr(data-title);
+  font-size: 15px;
+  position: absolute;
+  padding: 10px;
+  bottom: 100%;
+  left: 0%;
+  white-space: nowrap;
+  opacity: 0;
+  z-index: 99999;
+  visibility: hidden;
+  
+  color: white;
+  background-color: var(--title-background);
+  box-shadow: var(--shadow);
+  border: var(--title-border);
+}
+
+[data-title] {
+  position: relative;
 }

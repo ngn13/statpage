@@ -6,11 +6,11 @@ import (
 	"path"
 	"time"
 
-	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/log"
-	"github.com/gofiber/fiber/v2/middleware/logger"
+  "github.com/gofiber/fiber/v2"
+  "github.com/gofiber/fiber/v2/log"
+  "github.com/gofiber/fiber/v2/middleware/logger"
   "github.com/gofiber/template/django/v3"
-	"github.com/ngn13/statpage/lib"
+  "github.com/ngn13/statpage/lib"
 )
 
 func CheckTimePassed(t time.Time) string {
@@ -22,13 +22,13 @@ func CheckTimePassed(t time.Time) string {
 
   if diff.Minutes() > 1 { 
     res = fmt.Sprintf(
-      "%dm and %ds ago", 
+      "%dm %ds ago", 
       int(diff.Minutes()), int(diff.Seconds())-(int(diff.Minutes())*60),
     )
   }
 
   if diff.Hours() > 1 {
-    res = fmt.Sprintf("%dh and %dm ago", 
+    res = fmt.Sprintf("%dh %dm ago", 
       int(diff.Hours()),
       int(diff.Minutes())-(int(diff.Hours())*60), 
     )
@@ -43,6 +43,7 @@ func main(){
 
   engine := django.New("./views", ".html")
   app := fiber.New(fiber.Config{
+    DisableStartupMessage: true,
     Views: engine,
   })
 

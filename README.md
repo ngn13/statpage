@@ -1,7 +1,7 @@
-# statpage | a minimal status page application
-![GitHub License](https://img.shields.io/github/license/ngn13/statpage?style=for-the-badge)
-![Go version](https://img.shields.io/github/go-mod/go-version/ngn13/statpage?style=for-the-badge)
-![GitHub repo size](https://img.shields.io/github/repo-size/ngn13/statpage?style=for-the-badge)
+# statpage | minimal status page application
+![](https://img.shields.io/github/license/ngn13/statpage?style=for-the-badge)
+![](https://img.shields.io/github/go-mod/go-version/ngn13/statpage?style=for-the-badge)
+![](https://img.shields.io/github/actions/workflow/status/ngn13/statpage/docker.yml)
 
 ![showcase](images/default.png)
 
@@ -16,17 +16,17 @@ I use statpage for my own services, so [here is a live demo I guess](https://sta
 ## 🚀 Setup
 ### Docker 
 ```bash
-git clone https://github.com/ngn13/statpage.git
+mkdir -p statpage/config statpage/data
 cd statpage
-docker build --tag statpage .
-# create and edit the configuration file before
+# copy and edit the example configuration file before
 # starting the container - see the configuration section
 docker run -d -v $PWD/data:/app/data     \
-              -v $PWD/config:/app/config   \
+              -v $PWD/config:/app/config \
               -p 80:8877                 \
               --name statpage            \
-              statpage
+              ghcr.io/ngn13/statpage:latest
 ```
+Example configuration can be found [here](config/config.json.example)
 
 ### Building from source
 If you don't want to install statpage with docker, then you will 
@@ -34,7 +34,7 @@ need to compile it from the source as I do not release any binaries:
 ```bash
 git clone https://github.com/ngn13/statpage.git
 cd statpage
-go build .
+go build
 ```
 After that just run: `./statpage`
 

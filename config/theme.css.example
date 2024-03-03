@@ -16,8 +16,20 @@
   /* Service background */
   --service-background: #050505;
 
+/* Service border */
+  --service-border: solid 1px #404040;
+
   /* Header background */
   --header-background: black; 
+  
+  /* Bottom time bar background */ 
+  --time-background: black;
+  
+  /* Hover title background */
+  --title-background: black;
+  
+  /* Hover title border */
+  --title-border: solid 1px #404040;
 
   /* Bar colors, default colors go from green (100) to red (0) */
   --bar-inactive: #202020;
@@ -25,6 +37,12 @@
   --bar-70: #505000;
   --bar-40: #502500;
   --bar-0: #500000;
+
+  /* Global box shadow */
+  --shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+
+  /* Global radius size */
+  --radius: 10px;
 
   /* Bar colors that will be shown when the mouse is hovered */
   --bar-100-hover: #00FF00;
