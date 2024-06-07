@@ -43,6 +43,8 @@ body {
   font-family: "Ubuntu";
   background: var(--page-background);
   overflow-x: hidden;
+  height: 100vh;
+  width: 100vw;
 }
 
 .header {
