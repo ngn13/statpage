@@ -3,8 +3,8 @@ module github.com/ngn13/statpage
 go 1.21.4
 
 require (
-	github.com/gofiber/fiber/v2 v2.52.4
-	github.com/gofiber/template/django/v3 v3.1.11
+	github.com/gofiber/fiber/v2 v2.52.5
+	github.com/gofiber/template/django/v3 v3.1.12
 )
 
 require (
